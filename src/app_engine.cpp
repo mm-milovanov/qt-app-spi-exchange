@@ -3,7 +3,7 @@
 #include <gui/connection_page_gui.h>
 #include <gui/spi_page_gui.h>
 #include <proto/exchange.h>
-
+#include <src/version.h>
 
 #include <QQmlApplicationEngine>
 #include <QtQml>
@@ -22,6 +22,16 @@ AppEngine::AppEngine(QQmlApplicationEngine& engine,
     m_spiPageGUI = new SpiPageGUI(m_exchangeClient, this);
     engine.rootContext()->setContextProperty(
         "spiPageGUI", m_spiPageGUI
+    );
+
+    engine.rootContext()->setContextProperty(
+        "NVG_VERSION_STRING", NVG_VERSION_STRING
+    );
+    engine.rootContext()->setContextProperty(
+        "NVG_VERSION_BUILD_DATE", NVG_VERSION_BUILD_DATE
+    );
+    engine.rootContext()->setContextProperty(
+        "NVG_VERSION_BUILD_TIME", NVG_VERSION_BUILD_TIME
     );
 }
 

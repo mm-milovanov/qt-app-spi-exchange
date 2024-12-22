@@ -63,6 +63,18 @@ ApplicationWindow {
                     text: qsTr("Theme")
                     onClicked: isDarkMode = !isDarkMode;
                 }
+
+                ToolSeparator {}
+
+                ColumnLayout {
+                    Label {
+                        text: NVG_VERSION_STRING
+                    }
+                    Label {
+                        text: NVG_VERSION_BUILD_TIME + ' '
+                              + NVG_VERSION_BUILD_DATE
+                    }
+                }
             }
         }
 

@@ -9,7 +9,7 @@ CMAKE_WINDOWS_TOOLCHAIN="${ROOT_DIR}/cmake/WindowsToolChain.cmake"
 
 BUILD_DATE=$(date +%Y-%m-%d)
 BUILD_TIME=$(date "+%H-%M-%S")
-GIT_DESCRIBE=$(git describe --long --dirty)
+GIT_DESCRIBE=$(git describe --long --dirty --always)
 
 function gen_header(){
     echo "#ifndef __mcom02utils_version_h__" >                      $VERSION
