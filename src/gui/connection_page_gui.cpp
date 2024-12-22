@@ -51,7 +51,8 @@ void ConnectionPageGUI::onSerialDisconnectReq(){
         return;
 
     m_timer.stop();
-
+    m_isConnected = false;
+    emit connectionChanged(false);
     m_exchangeClient->unsetSerialPort();
 
     QObject::disconnect(m_serialPort, &nvg::SerialPort::connectionChanged,
