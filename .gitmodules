@@ -1,0 +1,3 @@
+[submodule "ext/qt-module-serial-port"]
+	path = ext/qt-module-serial-port
+	url = git@github.com:mm-milovanov/qt-module-serial-port.git

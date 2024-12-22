@@ -1,53 +1,93 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.Material
 import QtQuick.Layouts
 
 ApplicationWindow {
-    width: 640
-    height: 200
     visible: true
-    title: qsTr("arinc429-spi")
+    width:   1280
+    height:  720
+    title:   qsTr("SPI exchange")
 
-    RowLayout {
-        anchors.fill: parent
-        anchors.margins: 10
+    property bool isDarkMode:    true;
+    property int  currPageIndex: 0;
+    property bool showLogs:      false
 
-        Page {
-            Layout.fillWidth: true
-            header: Label {
-                text: qsTr("OP CODE")
-                color: "white"
-                wrapMode: Label.WordWrap
+    Material.theme:     (isDarkMode) ? Material.Dark   : Material.Light;
+    Material.primary:   (isDarkMode) ? Material.Indigo : Material.Blue;
+
+    Connections {
+        target: connectionPageGUI
+        function onConnectionChanged(flag) {
+            currPageIndex = (flag) ? 1 : 0;
+        }
+    }
+
+    ColumnLayout {
+        anchors.fill: parent;
+
+        ToolBar {
+            Layout.fillWidth: true;
+
+            RowLayout {
+                anchors.fill: parent;
+                anchors.leftMargin: 15
+                anchors.rightMargin: 15
+
+                Status {
+                    cppObject: serialPortGUI
+                }
+
+                ToolSeparator {}
+
+                ToolButton {
+                    text: qsTr("Connection")
+                    highlighted: currPageIndex == 0;
+                    onClicked: currPageIndex = 0;
+                }
+
+                ToolButton {
+                    text: qsTr("SPI control")
+                    highlighted: currPageIndex == 1;
+                    onClicked: currPageIndex = 1;
+                    enabled: connectionPageGUI.connected
+                }
+
+                ToolSeparator {}
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                ToolButton {
+                    text: qsTr("Theme")
+                    onClicked: isDarkMode = !isDarkMode;
+                }
             }
-            TextField {
-                anchors.fill: parent
-                anchors.margins: 10
+        }
+
+        Loader {
+            Layout.fillHeight: true;
+            Layout.fillWidth: true;
+
+            sourceComponent: {
+                switch (currPageIndex) {
+                case 0: return connectionPage;
+                case 1: return spiPage;
+                }
             }
         }
+    }
 
-        Page {
-            Layout.fillWidth: true
-            header: Label {
-                text: qsTr("DATA")
-                color: "white"
-                wrapMode: Label.WordWrap
-            }
-            TextField {
-                anchors.fill: parent
-                anchors.margins: 10
-            }
+    Component {
+        id: connectionPage
+        ConnectionPage {
+            cppObject: serialPortGUI
         }
+    }
 
-        Button {
-            text: qsTr("WRITE")
-        }
-
-        Button {
-            text: qsTr("READ")
-        }
-
-        Button {
-            text: qsTr("RESET")
-        }
+    Component {
+        id: spiPage
+        SpiPage { }
     }
 }
