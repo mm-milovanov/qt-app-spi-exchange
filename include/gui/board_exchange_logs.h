@@ -1,33 +1,26 @@
-#ifndef FASTBOOT_CLIENT_LOGS_H
-#define FASTBOOT_CLIENT_LOGS_H
+#ifndef BOARD_EXCHANGE_LOGS_H
+#define BOARD_EXCHANGE_LOGS_H
 
 #include <QObject>
 #include <QQmlEngine>
 #include <QAbstractListModel>
 
-#include "logs_model.h"
+#include <model/logs_model.h>
 
-/* Classes forward declaration */
-class FastBootDevice;
-
-class FastBootClientLogs : public QObject
+class BoardExchangeLogs : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QAbstractListModel* model READ getModel CONSTANT)
-    QML_NAMED_ELEMENT(ClientLogsCtrl)
+    // QML_NAMED_ELEMENT(ClientLogsCtrl)
 
 public:
-    explicit FastBootClientLogs(QObject *parent = nullptr);
-    ~FastBootClientLogs();
+    explicit BoardExchangeLogs(QObject *parent = nullptr);
+    ~BoardExchangeLogs();
 
     /* Qml invokable methods */
 
     // Set pointer to fastboot device
-    Q_INVOKABLE void setDevice(QObject*);
-    // Clear model
     Q_INVOKABLE void clear(void);
-    // Save log strings to file
-    Q_INVOKABLE void saveToFile(QUrl);
 
     /* Qml properties methods */
 
@@ -35,6 +28,8 @@ public:
     QAbstractListModel* getModel();
 
 public slots:
+    /* Public slots */
+
     void d(QString tag, QString msg); // Insert debug type msg
     void i(QString tag, QString msg); // Insert info type msg
     void k(QString tag, QString msg); // Insert ok type msg
@@ -43,8 +38,7 @@ public slots:
 
 private:
     /* Private fields */
-    FastBootDevice* m_device;
     LogsModel m_model;
 };
 
-#endif // FASTBOOT_CLIENT_LOGS_H
+#endif // BOARD_EXCHANGE_LOGS_H
