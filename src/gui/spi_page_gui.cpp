@@ -22,6 +22,7 @@ SpiPageGUI::SpiPageGUI(ExchangeClient* exchange,
     m_regsConf[0x0C] = {1,  0b10};
     m_regsConf[0x0D] = {32, 0b10};
     m_regsConf[0x0E] = {4,  0b01};
+    m_regsConf[0x10] = {2,  0b01};
     m_regsConf[0x11] = {0,  0b01};
     m_regsConf[0x12] = {0,  0b01};
 
@@ -36,6 +37,11 @@ SpiPageGUI::~SpiPageGUI() { }
 
 void SpiPageGUI::writeRequest(uint8_t opCode, QString str) {
     QByteArray data = QByteArray::fromHex(str.toUtf8());
+
+    QByteArray add;
+    for (int i=0; i<m_regsConf[opCode].first - data.size(); i++)
+        add.push_back('\x00');
+    data = add + data;
 
     QByteArray pkg;
     QDataStream stream(&pkg, QDataStream::WriteOnly);
