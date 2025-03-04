@@ -1,16 +1,16 @@
-#include <gui/connection_check_page_gui.h>
+#include <gui/arinc_bus_check_gui.h>
 #include <proto/proto.h>
 #include <proto/crc16.h>
 
 #include <QDebug>
 
-ConnectionCheckPageGUI::ConnectionCheckPageGUI(ExchangeClient* exchange,
+ArincBusCheckPageGUI::ArincBusCheckPageGUI(ExchangeClient* exchange,
                                                QObject *parent) :
     QObject{parent},
     m_exchange(exchange)
 {}
 
-void ConnectionCheckPageGUI::writeRequest(uint8_t opCode, QByteArray data) {
+void ArincBusCheckPageGUI::writeRequest(uint8_t opCode, QByteArray data) {
     QByteArray pkg;
     QDataStream stream(&pkg, QDataStream::WriteOnly);
     stream.setByteOrder(QDataStream::LittleEndian);
@@ -32,7 +32,7 @@ void ConnectionCheckPageGUI::writeRequest(uint8_t opCode, QByteArray data) {
     m_exchange->sendCmd(pkg, this);
 }
 
-void ConnectionCheckPageGUI::readRequest(uint8_t opCode, int size) {
+void ArincBusCheckPageGUI::readRequest(uint8_t opCode, int size) {
     qDebug() << "ConnectionCheckPageGUI::readRequest: "
              << opCode << " " << size;
 
@@ -56,7 +56,7 @@ void ConnectionCheckPageGUI::readRequest(uint8_t opCode, int size) {
     m_exchange->sendCmd(data, this);
 }
 
-void ConnectionCheckPageGUI::onCmdExecuted(QByteArray& msg) {
+void ArincBusCheckPageGUI::onCmdExecuted(QByteArray& msg) {
     qDebug() << "SpiPageGUI::onCmdExecuted: "
              << "received \'"
              << msg << "\'";
@@ -85,7 +85,7 @@ void ConnectionCheckPageGUI::onCmdExecuted(QByteArray& msg) {
     }
 }
 
-void ConnectionCheckPageGUI::onCmdFailed(QByteArray& msg) {
+void ArincBusCheckPageGUI::onCmdFailed(QByteArray& msg) {
     qDebug() << "SpiPageGUI::onCmdFailed: "
              << "cmd failed";
 

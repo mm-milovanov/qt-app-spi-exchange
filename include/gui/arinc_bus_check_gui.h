@@ -4,11 +4,11 @@
 #include <QObject>
 #include <proto/exchange.h>
 
-class ConnectionCheckPageGUI : public QObject, public ExchangeListener
+class ArincBusCheckPageGUI : public QObject, public ExchangeListener
 {
     Q_OBJECT
 public:
-    explicit ConnectionCheckPageGUI(ExchangeClient* exchange,
+    explicit ArincBusCheckPageGUI(ExchangeClient* exchange,
                                     QObject *parent = nullptr);
 
 signals:
