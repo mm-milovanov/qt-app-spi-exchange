@@ -2,6 +2,7 @@
 #include <gui/serial_port_gui.h>
 #include <gui/connection_page_gui.h>
 #include <gui/spi_page_gui.h>
+#include <gui/arinc_bus_check_gui.h>
 #include <proto/exchange.h>
 #include <src/version.h>
 
@@ -23,6 +24,11 @@ AppEngine::AppEngine(QQmlApplicationEngine& engine,
     engine.rootContext()->setContextProperty(
         "spiPageGUI", m_spiPageGUI
     );
+
+    m_arincBusCheckPageGUI = new ArincBusCheckPageGUI(m_exchangeClient, this);
+    engine.rootContext()->setContextProperty(
+        "connectionCheckPageGUI", m_arincBusCheckPageGUI
+        );
 
     engine.rootContext()->setContextProperty(
         "NVG_VERSION_STRING", NVG_VERSION_STRING

@@ -5,6 +5,7 @@
 
 class QQmlApplicationEngine;
 class ConnectionPageGUI;
+class ArincBusCheckPageGUI;
 class SpiPageGUI;
 class ExchangeClient;
 
@@ -25,9 +26,10 @@ public:
 signals:
 
 private:
-    ConnectionPageGUI*  m_connectionPageGUI;
-    SpiPageGUI*         m_spiPageGUI;
-    ExchangeClient*     m_exchangeClient;
+    ConnectionPageGUI*      m_connectionPageGUI;
+    ArincBusCheckPageGUI*   m_arincBusCheckPageGUI;
+    SpiPageGUI*             m_spiPageGUI;
+    ExchangeClient*         m_exchangeClient;
 };
 
 #endif // APP_ENGINE_H

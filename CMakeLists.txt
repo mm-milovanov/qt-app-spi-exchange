@@ -27,6 +27,8 @@ qt_add_executable(${EXECUTABLE_NAME}
     src/gui/spi_page_gui.cpp
     include/gui/connection_page_gui.h
     src/gui/connection_page_gui.cpp
+    include/gui/arinc_bus_check_gui.h
+    src/gui/arinc_bus_check_gui.cpp
 )
 
 set(qml_files
@@ -36,6 +38,7 @@ set(qml_files
     qml/ConnectionPage.qml
     qml/SpiPage.qml
     qml/Status.qml
+    qml/ArincBusCheck.qml
 )
 
 qt_add_qml_module(${EXECUTABLE_NAME}
