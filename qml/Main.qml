@@ -40,17 +40,26 @@ ApplicationWindow {
 
                 ToolSeparator {}
 
-                ToolButton {
-                    text: qsTr("Connection")
-                    highlighted: currPageIndex == 0;
-                    onClicked: currPageIndex = 0;
-                }
+                Repeater {
+                    model: [
+                        qsTr("Connection"),
+                        qsTr("SPI control"),
+                        qsTr("ARINC bus check")
+                    ]
 
-                ToolButton {
-                    text: qsTr("SPI control")
-                    highlighted: currPageIndex == 1;
-                    onClicked: currPageIndex = 1;
-                    enabled: connectionPageGUI.connected
+                    ToolButton {
+                        text: modelData
+                        highlighted: currPageIndex == index;
+                        enabled: connectionPageGUI.connected
+                        onClicked: currPageIndex = index;
+                        Rectangle {
+                            height: 2
+                            width: parent.width
+                            anchors.bottom: parent.bottom
+                            color: Material.accent
+                            visible: currPageIndex == index
+                        }
+                    }
                 }
 
                 ToolSeparator {}
@@ -86,6 +95,7 @@ ApplicationWindow {
                 switch (currPageIndex) {
                 case 0: return connectionPage;
                 case 1: return spiPage;
+                case 2: return arincBusCheck;
                 }
             }
         }
@@ -101,5 +111,12 @@ ApplicationWindow {
     Component {
         id: spiPage
         SpiPage { }
+    }
+
+    Component {
+        id: arincBusCheck
+        ArincBusCheck {
+            cppObject: connectionCheckPageGUI
+        }
     }
 }
