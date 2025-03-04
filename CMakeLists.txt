@@ -44,6 +44,8 @@ set(qml_files
     qml/SpiPage.qml
     qml/Status.qml
     qml/ArincBusCheck.qml
+    qml/BoardExchangeLogs.qml
+    qml/ArincBusCheckControls.qml
 )
 
 qt_add_qml_module(${EXECUTABLE_NAME}
