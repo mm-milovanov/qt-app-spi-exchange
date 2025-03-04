@@ -3,11 +3,8 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 
-import "./extra"
-import FastbootModule
-
 Item {
-    required property QtObject deviceObj
+    required property QtObject logsCtrlObj
 
     function getColor(type) {
         switch(type) {
@@ -16,26 +13,14 @@ Item {
         case 1: // INFO
             return Material.color(Material.Cyan);
         case 2: // OK
-            return Material.color(Material.Gren);
+            return Material.color(Material.Green);
         case 3: // WARNING
             return Material.color(Material.Orange);
         case 4: // ERROR
             return Material.color(Material.Red);
-        default:
+        default:// UNKNOWN
             return Material.color(Material.Grey);
         }
-    }
-
-    ClientLogsCtrl {
-        id: clientLogsCtrl
-        Component.onCompleted: {
-            clientLogsCtrl.setDevice(deviceObj);
-        }
-    }
-
-    Background {
-        color: Material.background
-        anchors.fill: parent
     }
 
     ScrollBar {
@@ -50,34 +35,21 @@ Item {
         anchors.fill: parent;
         anchors.margins: 20
 
-        Label {
-            text: qsTr("Логи обмена")
-            Layout.fillWidth: true
-            font.capitalization: Font.AllUppercase
-            font.bold: true
-            wrapMode: Label.WordWrap
-            horizontalAlignment: Text.AlignHCenter
-        }
-
         RowLayout {
             Layout.fillWidth: true
 
             Label {
-                Layout.preferredWidth: 100
-                text: qsTr("Время")
+                Layout.preferredWidth: 125
+                text: qsTr("Time")
             }
 
-            ToolSeparator {}
-
             Label {
-                Layout.preferredWidth: 100
-                text: qsTr("Тип")
+                Layout.preferredWidth: 75
+                text: qsTr("Tag")
             }
 
-            ToolSeparator {}
-
             Label {
-                text: qsTr("Сообщение")
+                text: qsTr("Message")
             }
         }
 
@@ -87,7 +59,7 @@ Item {
             Layout.fillHeight: true
 
             clip: true
-            model: clientLogsCtrl.model
+            model: logsCtrlObj.model
             highlightMoveDuration: 1
             boundsBehavior: Flickable.StopAtBounds
 
@@ -98,25 +70,21 @@ Item {
 
                 Label {
                     Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 125
                     text: model.time
                     textFormat: TextEdit.RichText
                     font.family: "Monospace"
                     color: getColor(model.type)
                 }
 
-                ToolSeparator {}
-
                 Label {
                     Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 75
                     text: model.tag
                     textFormat: TextEdit.RichText
                     font.family: "Monospace"
                     color: getColor(model.type)
                 }
-
-                ToolSeparator {}
 
                 Label {
                     Layout.alignment: Qt.AlignTop | Qt.AlignLeft
@@ -129,13 +97,22 @@ Item {
                 }
             }
 
-            onCountChanged: {
-                if (true) {
-                    var newIndex = count - 1 // last index
-                    positionViewAtEnd()
-                    currentIndex = newIndex
-                }
+            Timer {
+                id: positionTimer
+                interval: 200
+                repeat: false
+                onTriggered: logList.positionViewAtIndex(logList.count-1, ListView.Visible)
             }
+
+            onCountChanged: {
+                positionTimer.start()
+            }
+
+            // onCountChanged: {
+            //     var newIndex = logList.count - 1 // last index
+            //     logList.positionViewAtEnd()
+            //     logList.currentIndex = newIndex
+            // }
         }
     }
 }

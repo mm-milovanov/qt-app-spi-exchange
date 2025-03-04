@@ -25,12 +25,6 @@ SpiPageGUI::SpiPageGUI(ExchangeClient* exchange,
     m_regsConf[0x10] = {2,  0b01};
     m_regsConf[0x11] = {0,  0b01};
     m_regsConf[0x12] = {0,  0b01};
-
-    /* For sx12XX chip test op codes */
-    // m_regsConf[0x09] = {1,  0b10};
-    // m_regsConf[0x89] = {1,  0b01};
-    // m_regsConf[0x00] = {32, 0b10};
-    // m_regsConf[0x80] = {32, 0b01};
 }
 
 SpiPageGUI::~SpiPageGUI() { }

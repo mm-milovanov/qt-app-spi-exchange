@@ -34,6 +34,8 @@ qt_add_executable(${EXECUTABLE_NAME}
 
     include/model/logs_model.h
     src/model/logs_model.cpp
+
+    include/extra/idle_wait.h
 )
 
 set(qml_files

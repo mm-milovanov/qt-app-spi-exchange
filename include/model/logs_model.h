@@ -34,9 +34,15 @@ public:
                   int role = Qt::DisplayRole) const override;
 
 private:
+    typedef struct log_msg_t {
+        QString time;
+        QString tag;
+        QString msg;
+        msg_type_e type;
+    } log_msg_t;
+
     /* Private fields */
-    QList<std::tuple<QString,QString,QString,msg_type_e>>
-    m_logMsgs; // model list of tuple {time, tag, msg, type}
+    QList<log_msg_t> m_logMsgs;
 };
 
 #endif // LOGS_MODEL_H

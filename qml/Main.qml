@@ -19,7 +19,8 @@ ApplicationWindow {
     Connections {
         target: connectionPageGUI
         function onConnectionChanged(flag) {
-            currPageIndex = (flag) ? 1 : 0;
+            if (!flag)
+                currPageIndex = 0;
         }
     }
 
@@ -50,7 +51,7 @@ ApplicationWindow {
                     ToolButton {
                         text: modelData
                         highlighted: currPageIndex == index;
-                        enabled: connectionPageGUI.connected
+                        // enabled: connectionPageGUI.connected
                         onClicked: currPageIndex = index;
                         Rectangle {
                             height: 2
@@ -115,8 +116,6 @@ ApplicationWindow {
 
     Component {
         id: arincBusCheck
-        ArincBusCheck {
-            cppObject: arincBusCheckPageGUI
-        }
+        ArincBusCheck { }
     }
 }

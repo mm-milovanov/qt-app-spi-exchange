@@ -3,15 +3,49 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 
-ColumnLayout {
-    required property QtObject cppObject
+Item {
+    property QtObject arincBusCheckPageObj: arincBusCheckPageGUI
 
-    Label {
-        Layout.fillWidth: true;
-        horizontalAlignment: Text.AlignHCenter
-        text: qsTr("ARINC connection check");
+    ColumnLayout {
+        anchors.centerIn: parent
+        spacing: 20
+
+        Pane {
+            implicitWidth: 800
+            Layout.alignment: Qt.AlignHCenter
+            Material.elevation: 6
+
+            ArincBusCheckControls {
+                arincBusCheckPageObj: arincBusCheckPageGUI
+                anchors.fill: parent
+            }
+        }
+
+        Pane {
+            implicitWidth: 800
+            Layout.minimumHeight: 300
+            Layout.maximumHeight: 400
+            Layout.alignment: Qt.AlignHCenter
+            Material.elevation: 6
+
+            ColumnLayout {
+                anchors.fill: parent
+
+                Label {
+                    text: qsTr("Logs")
+                    Layout.fillWidth: true
+                    font.capitalization: Font.AllUppercase
+                    font.bold: true
+                    wrapMode: Label.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                }
+
+                BoardExchangeLogs {
+                    Layout.fillWidth: true;
+                    Layout.fillHeight: true;
+                    logsCtrlObj: arincBusCheckPageGUI.getLogsCtrl();
+                }
+            }
+        }
     }
-
-
-
 }

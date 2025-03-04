@@ -46,6 +46,7 @@ ColumnLayout {
 
             horizontalAlignment: Qt.AlignHCenter;
             text: "0x" + opCode.toString(16);
+            font.family: "Monospace"
             onEditingFinished: {
                 opCode = (text.length !== 0) ? parseInt(text, 16) : 0;
 
@@ -97,6 +98,7 @@ ColumnLayout {
             readOnly: !isWritable
             maximumLength: (isHexDataView) ? 2*dataByteSize : 8*dataByteSize;
             text: (isHexDataView) ? dataStr : hex2bin(dataStr);
+            font.family: "Monospace"
 
             onEditingFinished: {
                 dataStr = (isHexDataView) ? text : bin2hex(text);

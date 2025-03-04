@@ -16,6 +16,23 @@
 ; /* to fix clang warning */
 #pragma pack(push,1)
 
+/*
+ * CMD Register - 16 bits
+ *  ___________ ___________
+ * | CMD[15:8] | DATA[7:0] |
+ *  ----------- -----------
+ *
+ *  CMD[15:8] - 8 bits - CMD code. Can be:
+ *  1. 0x00 - ECHO request
+ *  2. 0x20 - write data via SPI
+ *  3. 0x21 - read data via SPI
+ *
+ *  DATA[7:0] - 8 bits - CMD data. Can be:
+ *  1. RESERVED - if CMD register equals 0x00
+ *  2. DATA SIZE - from 0 to 128 (maximum payload size)
+ *                 if CMD register equals 0x20 or 0x21.
+ */
+
 typedef struct proto_pkg_t {
     // Header
     uint16_t header;
@@ -28,7 +45,7 @@ typedef struct proto_pkg_t {
         char data[PROTO_PKG_PAYLOAD_SIZE];
         uint32_t word;
     } payload;
-    // Control
+    // Control fields
     uint16_t cnt;
     uint16_t crc;
     // Footer
@@ -39,20 +56,8 @@ typedef struct proto_pkg_t {
 
 enum class ExchangeCmdCode {
     ECHO  = 0x00,
-    FW_INFO = 0x01,
-    SPI_INFO = 0x02,
-    GET_VAR = 0x10,
-    SET_VAR = 0x11,
     SPI_WRITE = 0x20,
     SPI_READ = 0x21
-};
-
-enum class ExchangeVarCode {
-    DATA_LEN = 0,
-    DATA_ORDER = 1,
-    CPOL = 2,
-    SPHA = 3,
-    FREQ = 4,
 };
 
 /* Helper functions */

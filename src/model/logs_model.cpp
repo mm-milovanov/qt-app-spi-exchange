@@ -1,4 +1,4 @@
-#include "logs_model.h"
+#include <model/logs_model.h>
 
 #include <QTime>
 
@@ -11,7 +11,7 @@ enum role_e {
 
 LogsModel::LogsModel(QObject *parent)
     : QAbstractListModel{parent}
-{}
+{ }
 
 void LogsModel::clear()
 {
@@ -21,6 +21,12 @@ void LogsModel::clear()
 }
 
 void LogsModel::append(QString tag, QString msg, msg_type_e type) {
+    if (m_logMsgs.size() > 1000) {
+        beginRemoveRows(QModelIndex(), 0, 0);
+        m_logMsgs.pop_front();
+        endRemoveRows();
+    }
+
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     QString time = QTime::currentTime().toString("hh:mm:ss:zzz");
     m_logMsgs.append({time, tag, msg, type});
@@ -43,13 +49,13 @@ QVariant LogsModel::data(const QModelIndex& index, int role) const
     auto& item = m_logMsgs.at(index.row());
     switch (role) {
     case TIME:
-        return std::get<0>(item);
+        return item.time;
     case TAG:
-        return std::get<1>(item);
+        return item.tag;
     case MSG:
-        return std::get<2>(item);
+        return item.msg;
     case TYPE:
-        return ((int)std::get<3>(item));
+        return item.type;
     }
 
     return QVariant();
