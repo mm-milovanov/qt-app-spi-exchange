@@ -116,7 +116,7 @@ ApplicationWindow {
     Component {
         id: arincBusCheck
         ArincBusCheck {
-            cppObject: connectionCheckPageGUI
+            cppObject: arincBusCheckPageGUI
         }
     }
 }

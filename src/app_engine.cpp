@@ -27,7 +27,7 @@ AppEngine::AppEngine(QQmlApplicationEngine& engine,
 
     m_arincBusCheckPageGUI = new ArincBusCheckPageGUI(m_exchangeClient, this);
     engine.rootContext()->setContextProperty(
-        "connectionCheckPageGUI", m_arincBusCheckPageGUI
+        "arincBusCheckPageGUI", m_arincBusCheckPageGUI
         );
 
     engine.rootContext()->setContextProperty(
