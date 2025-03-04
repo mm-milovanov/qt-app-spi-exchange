@@ -29,6 +29,11 @@ qt_add_executable(${EXECUTABLE_NAME}
     src/gui/connection_page_gui.cpp
     include/gui/arinc_bus_check_gui.h
     src/gui/arinc_bus_check_gui.cpp
+    include/gui/board_exchange_logs.h
+    src/gui/board_exchange_logs.cpp
+
+    include/model/logs_model.h
+    src/model/logs_model.cpp
 )
 
 set(qml_files
